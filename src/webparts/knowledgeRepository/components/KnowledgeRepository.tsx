@@ -68,7 +68,7 @@ export default class KnowledgeRepository extends React.Component<IKnowledgeRepos
               <div className={styles.features}>
                 <div className={styles.featureitem}>
                   <span className={styles.checkicon}>
-                    <img src={require('../assets/Group16130.png')} alt="Check" />
+                    <img className={styles.checkimg} src={require('../assets/Group16130.png')} alt="Check" />
                   </span>
                   <span className={styles.feturetitle}>Seamless Scheduling</span>
                 </div>
@@ -77,19 +77,174 @@ export default class KnowledgeRepository extends React.Component<IKnowledgeRepos
                   <span className={styles.checkicon}>
                     <img className={styles.checkimg} src={require('../assets/Group16130.png')} alt="Check" />
                   </span>
-                  <span>Service Guarantee</span>
+                  <span className={styles.feturetitle}>Service Guarantee</span>
                 </div>
 
                 <div className={styles.featureitem}>
                   <span className={styles.checkicon}>
-                    <img src={require('../assets/Group16130.png')} alt="Check" />
+                    <img className={styles.checkimg} src={require('../assets/Group16130.png')} alt="Check" />
                   </span>
-                  <span>Integrated Collaboration</span>
+                  <span className={styles.feturetitle}>Integrated Collaboration</span>
                 </div>
               </div>
 
               <a href="#" className={styles.discoverbutton}>Discover More</a>
             </div>
+          </div>
+        </section>
+
+        <section className={styles.blogSection}>
+          <div className={styles.container}>
+
+            {/* Section Header */}
+            <div className={styles.sectionHeader}>
+              <span className={styles.sectionTag}>
+                Get To Know About Us
+              </span>
+
+              <h2>Our Latest News &amp; Blog</h2>
+
+              <p>
+                Explore insightful articles, industry trends, and exciting updates curated just for you.
+              </p>
+            </div>
+
+            <div className={styles.blogGrid}>
+
+              <div className={styles.blogCard}>
+                <div className={styles.blogImage}>
+                  <img
+                    src={require('../assets/01.png')}
+                    alt="Professional working at a desk"
+                  />
+                </div>
+
+                <div className={styles.blogContent}>
+                  <span className={styles.category}>Business</span>
+
+                  <h3>Top 10 Skills to Thrive in the Digital Age</h3>
+
+                  <div className={styles.blogMeta}>
+                    <span>
+                      <img src={require('../assets/People.png')} />
+                      By John
+                    </span>
+
+                    <span>
+                      <img src={require('../assets/Calendar.png')} />
+                      August 25, 2023
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.blogCard}>
+                <div className={styles.blogImage}>
+                  <img
+                    src={require('../assets/02.png')}
+                    alt="Colleagues working together"
+                  />
+                </div>
+
+                <div className={styles.blogContent}>
+                  <span className={styles.category}>Finance</span>
+
+                  <h3>Navigating the Future of Remote Learning</h3>
+
+                  <div className={styles.blogMeta}>
+                    <span>
+                      <img src={require('../assets/People.png')} />
+                      By Natasha
+                    </span>
+
+                    <span>
+                      <img src={require('../assets/Calendar.png')} />
+                      June 12, 2023
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.blogCard}>
+                <div className={styles.blogImage}>
+                  <img
+                    src={require('../assets/03.png')}
+                    alt="Business team meeting"
+                  />
+                </div>
+
+                <div className={styles.blogContent}>
+                  <span className={styles.category}>Data Science</span>
+
+                  <h3>What Leonardo Teach us About Web Design</h3>
+
+                  <div className={styles.blogMeta}>
+                    <span>
+                      <img src={require('../assets/People.png')} />
+                      By William
+                    </span>
+
+                    <span>
+                      <img src={require('../assets/Calendar.png')} />
+                      July 29, 2023
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <section className={styles.aboutSection}>
+          <div className={styles.aboutWrapper}>
+
+            <div className={styles.aboutContent}>
+              <span className={styles.aboutTag}>
+                Get To Know About Us
+              </span>
+
+              <h1>
+                Find Your Path with<br />
+                Our Online Courses
+              </h1>
+
+              <p className={styles.aboutDescription}>
+                Embark on a personalized journey of growth and discovery with our
+                online courses. Whether you're charting a new career path, seeking to
+                expand your skills.
+              </p>
+
+              <div className={styles.aboutFeatures}>
+                <div className={styles.aboutfeatureItem}>
+                  <span className={styles.aboutcheckIcon}><img className={styles.aboutImage} src={require('../assets/Group16130.png')} alt="Check" /></span>
+                  <span>Personalized Learning Paths</span>
+                </div>
+
+                <div className={styles.aboutfeatureItem}>
+                  <span className={styles.aboutcheckIcon}><img className={styles.aboutImage} src={require('../assets/Group16130.png')} alt="Check" /></span>
+                  <span>Interactive Course Materials</span>
+                </div>
+
+                <div className={styles.aboutfeatureItem}>
+                  <span className={styles.aboutcheckIcon}><img className={styles.aboutImage} src={require('../assets/Group16130.png')} alt="Check" /></span>
+                  <span>Expert Instructor Support</span>
+                </div>
+              </div>
+
+              <a href="#" className={styles.aboutButton}>
+                Discover More
+              </a>
+            </div>
+
+            <div className={styles.aboutVisual}>
+
+              <div>
+                <img
+                  src={require('../assets/Group16129.png')} alt="Smiling woman" />
+              </div>
+            </div>
+
           </div>
         </section>
 
