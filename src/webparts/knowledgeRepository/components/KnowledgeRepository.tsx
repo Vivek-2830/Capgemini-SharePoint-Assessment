@@ -96,7 +96,6 @@ export default class KnowledgeRepository extends React.Component<IKnowledgeRepos
         <section className={styles.blogSection}>
           <div className={styles.container}>
 
-            {/* Section Header */}
             <div className={styles.sectionHeader}>
               <span className={styles.sectionTag}>
                 Get To Know About Us
