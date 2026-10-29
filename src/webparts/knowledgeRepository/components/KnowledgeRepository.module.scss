@@ -734,3 +734,54 @@
     }
   }
 }
+
+
+/* --------------------------------------------------------------- */
+
+#CommentsWrapper {
+    display: none !important;
+}
+
+#sp-appBar {
+    display: none !important;
+}
+
+[data-automation-id="HorizontalNav-edit"] {
+    display: none;
+}
+
+[data-automationid="SiteHeaderFollowButton"] {
+    display: none;
+}
+
+[data-automationid="ShareSiteButton"] {
+    display: none;
+}
+
+[data-automation-id="pageCommandBarNewButton"] {
+    display: none;
+}
+
+[data-automation-id="pageSettingsButton"] {
+    display: none;
+}
+
+[data-automation-id="previewButton"] {
+    display: none;
+}
+
+[data-automation-id="analyticsButton"] {
+    display: none;
+}
+
+[data-automation-id="pageCommandBarFocusModeButton"] {
+    display: none;
+}
+
+[data-automation-id="pageCommandBarStatus"] {
+    display: none;
+}
+
+[data-automation-id="shareButton"] {
+    display: none;
+}
