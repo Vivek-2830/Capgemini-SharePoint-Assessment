@@ -1,0 +1,344 @@
+.knowledgeRepository {
+  overflow: hidden;
+  padding: 1em;
+  color: "[theme:bodyText, default: #323130]";
+  color: var(--bodyText);
+}
+
+.welcome {
+  text-align: center;
+}
+
+.welcomeImage {
+  width: 100%;
+  max-width: 420px;
+}
+
+// Variables
+$primary-blue: #142e5a;
+$badge-blue: #087bb8;
+$accent-turquoise: #20c5c9;
+$text-color: #222222;
+$white: #ffffff;
+
+$hero-height: 293px;
+$content-width: 332px;
+
+// Hero Section
+.heroSection {
+  width: 100%;
+  height: 400px;
+  background-image: url("../assets/BANNERIMAGE.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  padding: 20px 29px;
+  box-sizing: border-box;
+
+  // Content Box
+  .contentBox {
+    width: 399px;
+    min-height: 212px;
+    background: hsl(0deg 0% 89.76% / 80%);
+    padding: 18px 15px 16px;
+    box-sizing: border-box;
+
+    // Guarantee Badge
+    .badge {
+      display: inline-block;
+      background-color: #087bb8;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 5px 7px;
+      border-radius: 4px;
+      margin-bottom: 7px;
+    }
+
+    // Heading
+    h1 {
+      color: #142e5a;
+      font-size: 32px;
+      font-weight: 400;
+      line-height: 1.55;
+      margin: 0 0 10px;
+    }
+
+    // Description
+    .description {
+      border-left: 3px solid #20c5c9;
+      margin-top: 16px;
+      padding: 8px 8px;
+
+      p {
+        color: #222;
+        font-size: 10px;
+        line-height: 1.5;
+        font-weight: 400;
+        margin: 0;
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 600px) {
+  .heroSection {
+    min-height: 350px;
+    padding: 20px;
+    background-position: center;
+
+    .contentBox {
+      width: 100%;
+      max-width: $content-width;
+      min-height: auto;
+
+      padding: 18px 15px;
+
+      h1 {
+        font-size: 25px;
+        line-height: 1.4;
+      }
+
+      .description {
+        p {
+          font-size: 10px;
+        }
+
+        br {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+
+// Variables
+$primary-color: #102c53;
+$secondary-color: #0877b5;
+$accent-color: #0cc5c1;
+$text-color: #6c7480;
+$light-bg: #f0f5fc;
+$white: #ffffff;
+
+.learningsection {
+  width: 100%;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  font-family: "Poppins", sans-serif;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  .learningcontainer {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+  }
+
+  // Left Side: Image
+  .learningimages {
+    position: relative;
+    width: 45%;
+    min-height: 320px;
+    flex-shrink: 0;
+
+    .imagecard {
+      position: absolute;
+      overflow: hidden;
+      border-radius: 12px;
+
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .studentimage {
+      width: 330px;
+      height: 330px;
+      left: 19px;
+      bottom: 0;
+      // z-index: 2;
+    }
+  }
+
+  // Right Side: Content
+  .learningcontent {
+    width: 55%;
+
+    .sectionlabel {
+      display: inline-block;
+      background-color: #f0f5fc;
+      color: #3674b9;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 7px 10px;
+      border-radius: 5px;
+      margin-bottom: 5px;
+    }
+
+    h1 {
+      font-size: 39px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #102c53;
+      margin: 0 0 14px;
+    }
+
+    .learningdescription {
+      color: #6c7480;
+      font-size: 14px;
+      line-height: 1.4;
+      margin-bottom: 25px;
+      margin-top: 22px;
+      max-width: 429px;
+    }
+
+    .features {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 22px;
+
+      .featureitem {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 10px;
+        color: #606975;
+      }
+
+      .checkicon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 23px;
+
+        .checkimg {
+          width: 23px;
+        }
+      }
+
+      .feturetitle {
+        font-size: 12px;
+      }
+    }
+
+    .discoverbutton {
+      display: inline-block;
+      text-decoration: none;
+      color: #ffffff;
+      background-color: #0877b5;
+      padding: 10px 16px;
+      border-radius: 3px;
+      font-size: 13px;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #075d8c;
+      }
+    }
+  }
+}
+
+// Tablet Responsive
+@media (max-width: 768px) {
+  .learningsection {
+    .learningcontainer {
+      gap: 30px;
+    }
+
+    .learningimages {
+      width: 45%;
+      min-height: 280px;
+
+      .circleshape {
+        width: 180px;
+        height: 180px;
+        left: 25px;
+        top: 40px;
+      }
+
+      .studentimage {
+        width: 125px;
+        height: 165px;
+      }
+    }
+
+    .learningcontent {
+      width: 55%;
+
+      h1 {
+        font-size: 22px;
+      }
+    }
+  }
+}
+
+// Mobile Responsive
+@media (max-width: 576px) {
+  .learningsection {
+    padding: 30px 20px;
+
+    .learningcontainer {
+      flex-direction: column;
+      gap: 35px;
+    }
+
+    .learningimages {
+      width: 100%;
+      max-width: 350px;
+      min-height: 250px;
+
+      .circleshape {
+        width: 200px;
+        height: 200px;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 10px;
+      }
+
+      .studentimage {
+        width: 145px;
+        height: 180px;
+        left: 0;
+        bottom: 0;
+      }
+    }
+
+    .learningcontent {
+      width: 100%;
+
+      h1 {
+        font-size: 26px;
+      }
+
+      .learningdescription {
+        font-size: 12px;
+      }
+
+      .features {
+        li {
+          font-size: 12px;
+        }
+      }
+
+      .discoverbutton {
+        font-size: 12px;
+      }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "capgemini-share-point-assessment-client-side-solution",
+    "id": "772b9ec3-a361-4322-af7c-6eb1d1c50c07",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.23.2"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "capgemini-share-point-assessment description"
+      },
+      "longDescription": {
+        "default": "capgemini-share-point-assessment description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "capgemini-share-point-assessment Feature",
+        "description": "The feature that activates elements of the capgemini-share-point-assessment solution.",
+        "id": "2b7f9b27-bf35-467c-b5cd-dc6347f8b7ac",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/capgemini-share-point-assessment.sppkg"
+  }
+}
