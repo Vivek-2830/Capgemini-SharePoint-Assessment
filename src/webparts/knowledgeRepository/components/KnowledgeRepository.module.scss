@@ -5,13 +5,107 @@
   color: var(--bodyText);
 }
 
-.welcome {
-  text-align: center;
+.knowledgeHubBanner {
+    background-image: url(https://localhost:4321/dist/Banner_77f60b4….png);
+    background-position: 98%;
+    background-repeat: no-repeat;
+    background-size: 105% 139%;
+    box-sizing: border-box;
+    font-family: Segoe UI, Arial, sans-serif;
+    height: 299px;
+    overflow: hidden;
+    width: 100%;
 }
 
-.welcomeImage {
-  width: 100%;
-  max-width: 420px;
+.bannerContent {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 20px 40px;
+  box-sizing: border-box;
+}
+
+.bannerText {
+  width: 50%;
+  color: #ffffff;
+}
+
+.welcomeText {
+  margin: 0 0 4px;
+  font-size: 25px;
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+.bannerTitle {
+  margin: 0 0 12px;
+  font-size: 42px;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #ffffff;
+}
+
+.bannerDescription {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.55;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+@media screen and (max-width: 768px) {
+  .knowledgeHubBanner {
+    background-size: cover;
+    background-position: center;
+  }
+
+  .bannerContent {
+    padding: 20px 24px;
+  }
+
+  .bannerText {
+    width: 75%;
+  }
+
+  .welcomeText {
+    font-size: 20px;
+  }
+
+  .bannerTitle {
+    font-size: 32px;
+  }
+
+  .bannerDescription {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .knowledgeHubBanner {
+    height: 220px;
+    background-position: center;
+  }
+
+  .bannerContent {
+    padding: 20px;
+  }
+
+  .bannerText {
+    width: 100%;
+  }
+
+  .bannerTitle {
+    font-size: 28px;
+  }
+
+  .bannerDescription {
+    font-size: 13px;
+  }
+
+  .bannerDescription br {
+    display: none;
+  }
 }
 
 /* -------------------------------------------------------------------------------------- */
