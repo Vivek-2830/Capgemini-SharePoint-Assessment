@@ -9,10 +9,19 @@
           "manifest": "./src/webparts/knowledgeRepository/KnowledgeRepositoryWebPart.manifest.json"
         }
       ]
+    },
+    "landing-page-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/landingPage/LandingPageWebPart.js",
+          "manifest": "./src/webparts/landingPage/LandingPageWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
   "localizedResources": {
-    "KnowledgeRepositoryWebPartStrings": "lib/webparts/knowledgeRepository/loc/{locale}.js"
+    "KnowledgeRepositoryWebPartStrings": "lib/webparts/knowledgeRepository/loc/{locale}.js",
+    "LandingPageWebPartStrings": "lib/webparts/landingPage/loc/{locale}.js"
   }
 }
