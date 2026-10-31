@@ -5,4 +5,5 @@ export interface IKnowledgeInfo {
   ArticleDescription: string;
   Image: string;
   PublishDate: string;
+  ArticleContent: string;
 }

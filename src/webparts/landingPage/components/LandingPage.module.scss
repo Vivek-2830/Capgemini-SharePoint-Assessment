@@ -952,6 +952,18 @@
   display: none !important;
 }
 
+.isFluent .SPPageChrome-app .commandBarWrapper {
+  height: 0px;
+}
+
+#spCommandBar {
+  display: none !important;
+}
+
+[data-automation-id="pageCommandBarEditButton"] {
+  display: none;
+}
+
 [data-automation-id="HorizontalNav-edit"] {
   display: none;
 }
@@ -985,9 +997,13 @@
 }
 
 [data-automation-id="pageCommandBarStatus"] {
-  display: none;
+  display: none !important;
 }
 
 [data-automation-id="shareButton"] {
+  display: none;
+}
+
+[data-automationid="HorizontalNav-edit"] {
   display: none;
 }

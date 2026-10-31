@@ -28,22 +28,22 @@ export default class LandingPage extends React.Component<ILandingPageProps> {
                     <input type="text" className={styles.searchInput} />
 
                     <button className={styles.searchButton} aria-label="Search">
-                      <img src={`require('../assets/Search.png')`} alt="" />
+                      <img src={require('../assets/Search.png')} alt="" />
                     </button>
                   </div>
 
                   <button className={styles.ticketButton}> Raise a Ticket <span>→</span> </button>
 
                   <button className={styles.iconButton} aria-label="Shopping cart">
-                    <img src={`require('../assets/cart_normal.png')`} alt="" />
+                    <img src={require('../assets/cart_normal.png')} alt="" />
                   </button>
 
                   <button className={styles.iconButton} aria-label="Notifications">
-                    <img src={`require('../assets/Noti_Normal.png')`} alt="" />
+                    <img src={require('../assets/Noti_Normal.png')} alt="" />
                   </button>
 
                   <div className={styles.profile}>
-                    <img src={`require('../assets/Profile.png')`} alt="User Profile" />
+                    <img src={require('../assets/Profile.png')} alt="User Profile" />
                   </div>
 
                 </div>
@@ -94,7 +94,7 @@ export default class LandingPage extends React.Component<ILandingPageProps> {
                 <div className={styles.learningimages}>
 
                   <div className={`${styles.imagecard} ${styles.studentimage}`}>
-                    <img src={`require('../assets/Group16128.png')`} alt="Student holding a laptop" />
+                    <img src={require('../assets/Group16128.png')} alt="Student holding a laptop" />
                   </div>
 
                 </div>
@@ -116,21 +116,21 @@ export default class LandingPage extends React.Component<ILandingPageProps> {
                   <div className={styles.features}>
                     <div className={styles.featureitem}>
                       <span className={styles.checkicon}>
-                        <img className={styles.checkimg} src={`require('../assets/Group16130.png')`} alt="Check" />
+                        <img className={styles.checkimg} src={require('../assets/Group16130.png')} alt="Check" />
                       </span>
                       <span className={styles.feturetitle}>Seamless Scheduling</span>
                     </div>
 
                     <div className={styles.featureitem}>
                       <span className={styles.checkicon}>
-                        <img className={styles.checkimg} src={`require('../assets/Group16130.png')`} alt="Check" />
+                        <img className={styles.checkimg} src={require('../assets/Group16130.png')} alt="Check" />
                       </span>
                       <span className={styles.feturetitle}>Service Guarantee</span>
                     </div>
 
                     <div className={styles.featureitem}>
                       <span className={styles.checkicon}>
-                        <img className={styles.checkimg} src={`require('../assets/Group16130.png')`} alt="Check" />
+                        <img className={styles.checkimg} src={require('../assets/Group16130.png')} alt="Check" />
                       </span>
                       <span className={styles.feturetitle}>Integrated Collaboration</span>
                     </div>
@@ -161,7 +161,7 @@ export default class LandingPage extends React.Component<ILandingPageProps> {
                   <div className={styles.blogCard}>
                     <div className={styles.blogImage}>
                       <img
-                        src={`require('../assets/01.png')`}
+                        src={require('../assets/01.png')}
                         alt="Professional working at a desk"
                       />
                     </div>
@@ -173,12 +173,12 @@ export default class LandingPage extends React.Component<ILandingPageProps> {
 
                       <div className={styles.blogMeta}>
                         <span>
-                          <img src={`require('../assets/People.png')`} />
+                          <img src={require('../assets/People.png')} />
                           By John
                         </span>
 
                         <span>
-                          <img src={`require('../assets/Calendar.png')`} />
+                          <img src={require('../assets/Calendar.png')} />
                           August 25, 2023
                         </span>
                       </div>
@@ -188,7 +188,7 @@ export default class LandingPage extends React.Component<ILandingPageProps> {
                   <div className={styles.blogCard}>
                     <div className={styles.blogImage}>
                       <img
-                        src={`require('../assets/02.png')`}
+                        src={require('../assets/02.png')}
                         alt="Colleagues working together"
                       />
                     </div>
@@ -200,12 +200,12 @@ export default class LandingPage extends React.Component<ILandingPageProps> {
 
                       <div className={styles.blogMeta}>
                         <span>
-                          <img src={`require('../assets/People.png')`} />
+                          <img src={require('../assets/People.png')} />
                           By Natasha
                         </span>
 
                         <span>
-                          <img src={`require('../assets/Calendar.png')`} />
+                          <img src={require('../assets/Calendar.png')} />
                           June 12, 2023
                         </span>
                       </div>
@@ -215,7 +215,7 @@ export default class LandingPage extends React.Component<ILandingPageProps> {
                   <div className={styles.blogCard}>
                     <div className={styles.blogImage}>
                       <img
-                        src={`require('../assets/03.png')`}
+                        src={require('../assets/03.png')}
                         alt="Business team meeting"
                       />
                     </div>
@@ -227,12 +227,12 @@ export default class LandingPage extends React.Component<ILandingPageProps> {
 
                       <div className={styles.blogMeta}>
                         <span>
-                          <img src={`require('../assets/People.png')`} />
+                          <img src={require('../assets/People.png')} />
                           By William
                         </span>
 
                         <span>
-                          <img src={`require('../assets/Calendar.png')`} />
+                          <img src={require('../assets/Calendar.png')} />
                           July 29, 2023
                         </span>
                       </div>
@@ -264,17 +264,17 @@ export default class LandingPage extends React.Component<ILandingPageProps> {
 
                   <div className={styles.aboutFeatures}>
                     <div className={styles.aboutfeatureItem}>
-                      <span className={styles.aboutcheckIcon}><img className={styles.aboutImage} src={`require('../assets/Group16130.png')`} alt="Check" /></span>
+                      <span className={styles.aboutcheckIcon}><img className={styles.aboutImage} src={require('../assets/Group16130.png')} alt="Check" /></span>
                       <span>Personalized Learning Paths</span>
                     </div>
 
                     <div className={styles.aboutfeatureItem}>
-                      <span className={styles.aboutcheckIcon}><img className={styles.aboutImage} src={`require('../assets/Group16130.png')`} alt="Check" /></span>
+                      <span className={styles.aboutcheckIcon}><img className={styles.aboutImage} src={require('../assets/Group16130.png')} alt="Check" /></span>
                       <span>Interactive Course Materials</span>
                     </div>
 
                     <div className={styles.aboutfeatureItem}>
-                      <span className={styles.aboutcheckIcon}><img className={styles.aboutImage} src={`require('../assets/Group16130.png')`} alt="Check" /></span>
+                      <span className={styles.aboutcheckIcon}><img className={styles.aboutImage} src={require('../assets/Group16130.png')} alt="Check" /></span>
                       <span>Expert Instructor Support</span>
                     </div>
                   </div>
@@ -288,7 +288,7 @@ export default class LandingPage extends React.Component<ILandingPageProps> {
 
                   <div>
                     <img
-                      src={`require('../assets/Group16129.png')`} alt="Smiling woman" />
+                      src={require('../assets/Group16129.png')} alt="Smiling woman" />
                   </div>
                 </div>
 

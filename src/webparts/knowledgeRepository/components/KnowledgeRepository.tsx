@@ -10,27 +10,59 @@ import { KnowledgeArticleServices } from '../services/KnowledgeArticleService';
 interface IKnowledgeRepositoryState {
   Articles: IKnowledgeInfo[];
   ArticleTypes: string[];
+  selectedArticle: IKnowledgeInfo | null;
   loading: boolean;
   error: string;
   searchText: string;
   typeValue: string;
   sortValue: string;
-  filter: { search: string; type: string; sort: string };
+  filter: {
+    search: string;
+    type: string;
+    sort: string;
+  };
 }
-
-// An Image column stores JSON text: {"serverRelativeUrl":"/sites/.../image.png", ...}
-const getImageUrl = (value: unknown): string => {
-  if (!value) return '';
-  try {
-    return JSON.parse(value as string).serverRelativeUrl || '';
-  } catch {
-    return '';
-  }
-};
 
 const formatDate = (value: string): string => {
   const d = new Date(value);
   return isNaN(d.getTime()) ? '' : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+};
+
+const getImageUrl = (value: any): string => {
+  if (!value) return '';
+
+  try {
+    // SharePoint may return an object or JSON string
+    const image = typeof value === 'string'
+      ? JSON.parse(value)
+      : value;
+
+    // SharePoint Image column
+    if (image.serverRelativeUrl) {
+      if (image.serverUrl) {
+        return image.serverUrl + image.serverRelativeUrl;
+      }
+
+      return window.location.origin + image.serverRelativeUrl;
+    }
+
+    // Alternative image URL formats
+    if (image.Url) return image.Url;
+    if (image.url) return image.url;
+
+    return '';
+  } catch (error) {
+    // If the value is already a direct image URL
+    if (typeof value === 'string' &&
+        (value.startsWith('https://') || value.startsWith('/'))) {
+      return value.startsWith('/')
+        ? window.location.origin + value
+        : value;
+    }
+
+    console.error('Image URL error:', error, value);
+    return '';
+  }
 };
 
 
@@ -46,6 +78,7 @@ export default class KnowledgeRepository extends React.Component<IKnowledgeRepos
     this.state = {
       Articles: [],
       ArticleTypes: [],
+      selectedArticle: null,
       loading: true,
       error: '',
       searchText: '',
@@ -122,8 +155,30 @@ export default class KnowledgeRepository extends React.Component<IKnowledgeRepos
     });
   };
 
+  private onReadMore = (article: IKnowledgeInfo): void => {
+    this.setState({
+      selectedArticle: article
+    });
+  };
+
+  // Close Article Details Dialog
+  private closeArticleDialog = (): void => {
+    this.setState({
+      selectedArticle: null
+    });
+  };
+
+  private handleDialogKeyDown = (
+    event: React.KeyboardEvent<HTMLDivElement>
+  ): void => {
+    if (event.key === 'Escape') {
+      this.closeArticleDialog();
+    }
+  };
+
+
   public render(): React.ReactElement<IKnowledgeRepositoryProps> {
-    const { searchText, typeValue, sortValue, loading, error } = this.state;
+    const { searchText, typeValue, sortValue, loading, error, selectedArticle } = this.state;
     const visible: IKnowledgeInfo[] = this.getVisibleArticles();
 
     return (
@@ -202,28 +257,186 @@ export default class KnowledgeRepository extends React.Component<IKnowledgeRepos
           </div>
         </div>
 
-        <div className={styles.cardGrid}>
-          {visible.map((a: IKnowledgeInfo) => (
-            <article key={a.ID} className={styles.card}>
-              <div className={styles.cardImage}>
-                {a.Image
-                  ? <img src={a.Image} alt={a.ArticleName} />
-                  : <span>{a.ArticleName ? a.ArticleName.charAt(0) : 'A'}</span>}
-              </div>
-              <div className={styles.cardBody}>
-                {a.ArticleType && <span className={styles.typeTag}>{a.ArticleType}</span>}
-                <h2 className={styles.cardTitle}>{a.ArticleName}</h2>
-                <p className={styles.bannerDescription}>{a.ArticleDescription}</p>
-                <div className={styles.cardMeta}>
-                  <span>{formatDate(a.PublishDate)}</span>
+        {/* Article Cards */}
+        {loading ? (
+          <div className={styles.loadingMessage}>
+            Loading articles...
+          </div>
+        ) : error ? (
+          <div className={styles.errorMessage}>
+            {error}
+          </div>
+        ) : visible.length === 0 ? (
+          <div className={styles.noArticles}>
+            No articles found.
+          </div>
+        ) : (
+
+          <div className={styles.cardGrid}>
+
+            {visible.map((a: IKnowledgeInfo) => (
+              <article key={a.ID} className={styles.card}>
+
+                <div className={styles.cardImage}>
+                  {getImageUrl(a.Image) ? (
+                    <img
+                      src={getImageUrl(a.Image)}
+                      alt={a.ArticleName}
+                    />
+                  ) : (
+                    <span>
+                      {a.ArticleName ? a.ArticleName.charAt(0) : 'A'}
+                    </span>
+                  )}
                 </div>
+
+                <div className={styles.cardBody}>
+
+                  {a.ArticleType && (
+                    <span className={styles.typeTag}>
+                      {a.ArticleType}
+                    </span>
+                  )}
+
+                  <h2 className={styles.cardTitle}>
+                    {a.ArticleName}
+                  </h2>
+
+                  <p className={styles.cardDescription}>
+                    {a.ArticleDescription}
+                  </p>
+
+                  <div className={styles.cardMeta}>
+                    <span>
+                      {formatDate(a.PublishDate)}
+                    </span>
+
+                    <button
+                      type="button"
+                      className={styles.readMoreBtn}
+                      onClick={() => this.onReadMore(a)}
+                    >
+                      Read More
+                      <span> →</span>
+                    </button>
+                  </div>
+
+                </div>
+
+              </article>
+            ))}
+
+          </div>
+        )}
+
+        {/* Article Details Dialog */}
+        {selectedArticle && (
+
+          <div
+            className={styles.modalOverlay}
+            onClick={this.closeArticleDialog}
+          >
+
+            <div
+              className={styles.articleDialog}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="article-dialog-title"
+              onClick={(e) => e.stopPropagation()}
+              onKeyDown={this.handleDialogKeyDown}
+              tabIndex={-1}
+            >
+
+              {/* Dialog Header */}
+              <div className={styles.dialogHeader}>
+
+                <h2>Article Details</h2>
+
+                <button
+                  type="button"
+                  className={styles.closeBtn}
+                  onClick={this.closeArticleDialog}
+                  aria-label="Close dialog"
+                >
+                  ×
+                </button>
+
               </div>
-            </article>
-          ))}
-        </div>
+
+              {/* Dialog Body */}
+              <div className={styles.dialogContent}>
+
+                {/* Left Side - Article Image */}
+                <div className={styles.dialogImage}>
+
+                  {getImageUrl(selectedArticle.Image) ? (
+                    <img
+                      src={getImageUrl(selectedArticle.Image)}
+                      alt={selectedArticle.ArticleName}
+                    />
+                  ) : (
+                    <div className={styles.noImage}>
+                      No Image Available
+                    </div>
+                  )}
+
+                </div>
+
+                {/* Right Side - Article Content */}
+                <div className={styles.dialogArticle}>
+
+                  {selectedArticle.ArticleType && (
+                    <span className={styles.dialogType}>
+                      {selectedArticle.ArticleType}
+                    </span>
+                  )}
+
+                  <h1 id="article-dialog-title">
+                    {selectedArticle.ArticleName}
+                  </h1>
+
+                  <div className={styles.dialogType}>
+                    Publish Date: {formatDate(selectedArticle.PublishDate)}
+                  </div>
+
+                  <p className={styles.dialogDescription}>
+                    {selectedArticle.ArticleDescription}
+                  </p>
+
+                  <div className={styles.articleContent}>
+                    <strong>Article Content :-</strong> <br/><br />
+                    {selectedArticle.ArticleContent ? (
+                      selectedArticle.ArticleContent
+                    ) : (
+                      <p>Article content is not available.</p>
+                    )}
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              {/* Dialog Footer */}
+              <div className={styles.dialogFooter}>
+
+                <button
+                  type="button"
+                  className={styles.closeDialogBtn}
+                  onClick={this.closeArticleDialog}
+                >
+                  Close
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        )}
 
       </section>
-
     );
   }
 }

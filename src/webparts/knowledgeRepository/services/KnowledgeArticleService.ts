@@ -18,21 +18,22 @@ export class KnowledgeArticleServices {
   public async getArticleInfo(): Promise<IKnowledgeInfo[]> {
     const items = await this.sp.web.lists
       .getByTitle(KNOWLEDGE_INFO_LIST)
-      .items.select('ID', 'ArticleName', 'ArticleDescription', 'ArticleType', 'Image', 'PublishDate')();
+      .items.select('ID', 'ArticleName', 'ArticleDescription', 'ArticleType', 'Image', 'PublishDate','ArticleContent').expand("AttachmentFiles")();
+      
 
     return items.map((item: any): IKnowledgeInfo => {
-      let imageUrl = '';
+      // let imageUrl = '';
 
-      if (typeof item.Image === 'string') {
-        try {
-          const parsed = JSON.parse(item.Image);
-          imageUrl = parsed.serverRelativeUrl || parsed.url || '';
-        } catch {
-          imageUrl = item.Image;
-        }
-      } else if (item.Image && typeof item.Image === 'object') {
-        imageUrl = item.Image.serverRelativeUrl || item.Image.url || '';
-      }
+      // if (typeof item.Image === 'string') {
+      //   try {
+      //     const parsed = JSON.parse(item.Image);
+      //     imageUrl = parsed.serverRelativeUrl || parsed.url || '';
+      //   } catch {
+      //     imageUrl = item.Image;
+      //   }
+      // } else if (item.Image && typeof item.Image === 'object') {
+      //   imageUrl = item.Image.serverRelativeUrl || item.Image.url || '';
+      // }
 
       return {
         ID: item.ID,
@@ -41,8 +42,11 @@ export class KnowledgeArticleServices {
           ? item.ArticleType
           : (item.ArticleType && item.ArticleType.Value) || '',
         ArticleDescription: item.ArticleDescription || '',
-        Image: imageUrl,
-        PublishDate: item.PublishDate || ''
+        Image: item.AttachmentFiles.length > 0
+              ? item.AttachmentFiles[0].ServerRelativeUrl
+              : require("../assets/Banner.png"),
+        PublishDate: item.PublishDate || '',
+        ArticleContent: item.ArticleContent || ''
       };
     });
   }
