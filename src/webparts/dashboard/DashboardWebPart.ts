@@ -25,6 +25,7 @@ export default class DashboardWebPart extends BaseClientSideWebPart<IDashboardWe
     const element: React.ReactElement<IDashboardProps> = React.createElement(
       Dashboard,
       {
+        context: this.context,
         description: this.properties.description,
         isDarkTheme: this._isDarkTheme,
         environmentMessage: this._environmentMessage,

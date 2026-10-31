@@ -8,5 +8,4 @@ export interface IKnowledgeArticle {
   Status?: string;
   PublishDate?: string;
   ViewCount?: number;
-  Tags?: string;
 }

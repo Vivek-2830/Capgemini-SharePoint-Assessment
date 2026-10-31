@@ -54,7 +54,7 @@ const getImageUrl = (value: any): string => {
   } catch (error) {
     // If the value is already a direct image URL
     if (typeof value === 'string' &&
-        (value.startsWith('https://') || value.startsWith('/'))) {
+      (value.startsWith('https://') || value.startsWith('/'))) {
       return value.startsWith('/')
         ? window.location.origin + value
         : value;
@@ -155,10 +155,42 @@ export default class KnowledgeRepository extends React.Component<IKnowledgeRepos
     });
   };
 
-  private onReadMore = (article: IKnowledgeInfo): void => {
+  private onReadMore = async (article: IKnowledgeInfo): Promise<void> => {
+
     this.setState({
       selectedArticle: article
     });
+
+    try {
+
+      // 1. Update Article View Count
+      const updatedViewCount =
+        await this.article.incrementArticleViewCount(article.ID);
+
+      // 2. Create Article Access Log
+      await this.article.logArticleAccess(article);
+
+      // 3. Update UI
+      this.setState((prevState) => ({
+        Articles: prevState.Articles.map((item) =>
+          item.ID === article.ID
+            ? { ...item, ViewCount: updatedViewCount }
+            : item
+        ),
+
+        selectedArticle: prevState.selectedArticle &&
+          prevState.selectedArticle.ID === article.ID
+          ? {
+            ...prevState.selectedArticle,
+            ViewCount: updatedViewCount
+          }
+          : prevState.selectedArticle
+      }));
+
+    } catch (error) {
+      console.error('Article access tracking failed:', error);
+    }
+
   };
 
   // Close Article Details Dialog
@@ -257,77 +289,66 @@ export default class KnowledgeRepository extends React.Component<IKnowledgeRepos
           </div>
         </div>
 
-        {/* Article Cards */}
-        {loading ? (
-          <div className={styles.loadingMessage}>
-            Loading articles...
-          </div>
-        ) : error ? (
-          <div className={styles.errorMessage}>
-            {error}
-          </div>
-        ) : visible.length === 0 ? (
-          <div className={styles.noArticles}>
-            No articles found.
-          </div>
-        ) : (
+        <div className={styles.cardGrid}>
 
-          <div className={styles.cardGrid}>
+          {visible.map((a: IKnowledgeInfo) => (
+            <article key={a.ID} className={styles.card}>
 
-            {visible.map((a: IKnowledgeInfo) => (
-              <article key={a.ID} className={styles.card}>
+              <div className={styles.cardImage}>
+                {getImageUrl(a.Image) ? (
+                  <img
+                    src={getImageUrl(a.Image)}
+                    alt={a.ArticleName}
+                  />
+                ) : (
+                  <span>
+                    {a.ArticleName ? a.ArticleName.charAt(0) : 'A'}
+                  </span>
+                )}
+              </div>
 
-                <div className={styles.cardImage}>
-                  {getImageUrl(a.Image) ? (
-                    <img
-                      src={getImageUrl(a.Image)}
-                      alt={a.ArticleName}
-                    />
-                  ) : (
-                    <span>
-                      {a.ArticleName ? a.ArticleName.charAt(0) : 'A'}
-                    </span>
-                  )}
+              <div className={styles.cardBody}>
+
+                {a.ArticleType && (
+                  <span className={styles.typeTag}>
+                    {a.ArticleType}
+                  </span>
+                )}
+
+                <h2 className={styles.cardTitle}>
+                  {a.ArticleName}
+                </h2>
+
+                <p className={styles.cardDescription}>
+                  {a.ArticleDescription}
+                </p>
+
+                <div className={styles.cardMeta}>
+                  <span>
+                    {formatDate(a.PublishDate)}
+                  </span>
+
+                  <span className={styles.viewCount}>
+                    Views: {a.ViewCount || 0}
+                  </span>
+
+                  <button
+                    type="button"
+                    className={styles.readMoreBtn}
+                    onClick={() => this.onReadMore(a)}
+                  >
+                    Read More
+                    <span> →</span>
+                  </button>
                 </div>
 
-                <div className={styles.cardBody}>
+              </div>
 
-                  {a.ArticleType && (
-                    <span className={styles.typeTag}>
-                      {a.ArticleType}
-                    </span>
-                  )}
+            </article>
+          ))}
 
-                  <h2 className={styles.cardTitle}>
-                    {a.ArticleName}
-                  </h2>
+        </div>
 
-                  <p className={styles.cardDescription}>
-                    {a.ArticleDescription}
-                  </p>
-
-                  <div className={styles.cardMeta}>
-                    <span>
-                      {formatDate(a.PublishDate)}
-                    </span>
-
-                    <button
-                      type="button"
-                      className={styles.readMoreBtn}
-                      onClick={() => this.onReadMore(a)}
-                    >
-                      Read More
-                      <span> →</span>
-                    </button>
-                  </div>
-
-                </div>
-
-              </article>
-            ))}
-
-          </div>
-        )}
 
         {/* Article Details Dialog */}
         {selectedArticle && (
@@ -404,7 +425,7 @@ export default class KnowledgeRepository extends React.Component<IKnowledgeRepos
                   </p>
 
                   <div className={styles.articleContent}>
-                    <strong>Article Content :-</strong> <br/><br />
+                    <strong>Article Content :-</strong> <br /><br />
                     {selectedArticle.ArticleContent ? (
                       selectedArticle.ArticleContent
                     ) : (

@@ -1,10 +1,19 @@
 import * as React from 'react';
 import styles from './LandingPage.module.scss';
 import type { ILandingPageProps } from './ILandingPageProps';
-import { escape } from '@microsoft/sp-lodash-subset';
-import welcomeDark from '../assets/welcome-dark.png';
-import welcomeLight from '../assets/welcome-light.png';
-
+import SearchIcon from '../assets/Search.png';
+import CartIcon from '../assets/cart_normal.png';
+import Notification from '../assets/Noti_Normal.png';
+import ProfileIcon from '../assets/Profile.png';
+import StuIcon from '../assets/Group16128.png';
+import CorrectIcon from '../assets/Group16130.png';
+import PeopleIcon from '../assets/People.png';
+import CalendarIcon from '../assets/Calendar.png';
+import BlogIcon from '../assets/01.png';
+import BlogIcon1 from '../assets/02.png';
+import BlogIcon2 from '../assets/03.png';
+import DiscoverIcon from '../assets/Group16129.png';
+ 
 export default class LandingPage extends React.Component<ILandingPageProps> {
   public render(): React.ReactElement<ILandingPageProps> {
     const {
@@ -28,34 +37,32 @@ export default class LandingPage extends React.Component<ILandingPageProps> {
                     <input type="text" className={styles.searchInput} />
 
                     <button className={styles.searchButton} aria-label="Search">
-                      <img src={require('../assets/Search.png')} alt="" />
+                      <img src={SearchIcon} alt="" />
                     </button>
                   </div>
 
                   <button className={styles.ticketButton}> Raise a Ticket <span>→</span> </button>
 
                   <button className={styles.iconButton} aria-label="Shopping cart">
-                    <img src={require('../assets/cart_normal.png')} alt="" />
+                    <img src={CartIcon} alt="" />
                   </button>
 
                   <button className={styles.iconButton} aria-label="Notifications">
-                    <img src={require('../assets/Noti_Normal.png')} alt="" />
+                    <img src={Notification} alt="" />
                   </button>
 
                   <div className={styles.profile}>
-                    <img src={require('../assets/Profile.png')} alt="User Profile" />
+                    <img src={ProfileIcon} alt="User Profile" />
                   </div>
 
                 </div>
 
                 <nav className={styles.headerNavigation}>
-                  <a href="#">Home</a>
+                  <a href="https://87twts.sharepoint.com/sites/Assessment">Home</a>
                   <span>|</span>
-                  <a href="#">Overview</a>
+                  <a href="https://87twts.sharepoint.com/sites/Assessment/SitePages/KnowledgeRepository.aspx">Knowledge Repository</a>
                   <span>|</span>
-                  <a href="#">Dashboard</a>
-                  <span>|</span>
-                  <a href="#">Administration</a>
+                  <a href="https://87twts.sharepoint.com/sites/Assessment/SitePages/Dashboard.aspx">Dashboard</a>
                 </nav>
 
               </div>
@@ -94,7 +101,7 @@ export default class LandingPage extends React.Component<ILandingPageProps> {
                 <div className={styles.learningimages}>
 
                   <div className={`${styles.imagecard} ${styles.studentimage}`}>
-                    <img src={require('../assets/Group16128.png')} alt="Student holding a laptop" />
+                    <img src={StuIcon} alt="Student holding a laptop" />
                   </div>
 
                 </div>
@@ -116,21 +123,21 @@ export default class LandingPage extends React.Component<ILandingPageProps> {
                   <div className={styles.features}>
                     <div className={styles.featureitem}>
                       <span className={styles.checkicon}>
-                        <img className={styles.checkimg} src={require('../assets/Group16130.png')} alt="Check" />
+                        <img className={styles.checkimg} src={CorrectIcon} alt="Check" />
                       </span>
                       <span className={styles.feturetitle}>Seamless Scheduling</span>
                     </div>
 
                     <div className={styles.featureitem}>
                       <span className={styles.checkicon}>
-                        <img className={styles.checkimg} src={require('../assets/Group16130.png')} alt="Check" />
+                        <img className={styles.checkimg} src={CorrectIcon} alt="Check" />
                       </span>
                       <span className={styles.feturetitle}>Service Guarantee</span>
                     </div>
 
                     <div className={styles.featureitem}>
                       <span className={styles.checkicon}>
-                        <img className={styles.checkimg} src={require('../assets/Group16130.png')} alt="Check" />
+                        <img className={styles.checkimg} src={CorrectIcon} alt="Check" />
                       </span>
                       <span className={styles.feturetitle}>Integrated Collaboration</span>
                     </div>
@@ -161,7 +168,7 @@ export default class LandingPage extends React.Component<ILandingPageProps> {
                   <div className={styles.blogCard}>
                     <div className={styles.blogImage}>
                       <img
-                        src={require('../assets/01.png')}
+                        src={BlogIcon}
                         alt="Professional working at a desk"
                       />
                     </div>
@@ -173,12 +180,12 @@ export default class LandingPage extends React.Component<ILandingPageProps> {
 
                       <div className={styles.blogMeta}>
                         <span>
-                          <img src={require('../assets/People.png')} />
+                          <img src={PeopleIcon} />
                           By John
                         </span>
 
                         <span>
-                          <img src={require('../assets/Calendar.png')} />
+                          <img src={CalendarIcon} />
                           August 25, 2023
                         </span>
                       </div>
@@ -188,7 +195,7 @@ export default class LandingPage extends React.Component<ILandingPageProps> {
                   <div className={styles.blogCard}>
                     <div className={styles.blogImage}>
                       <img
-                        src={require('../assets/02.png')}
+                        src={BlogIcon1}
                         alt="Colleagues working together"
                       />
                     </div>
@@ -200,12 +207,12 @@ export default class LandingPage extends React.Component<ILandingPageProps> {
 
                       <div className={styles.blogMeta}>
                         <span>
-                          <img src={require('../assets/People.png')} />
+                          <img src={PeopleIcon} />
                           By Natasha
                         </span>
 
                         <span>
-                          <img src={require('../assets/Calendar.png')} />
+                          <img src={CalendarIcon} />
                           June 12, 2023
                         </span>
                       </div>
@@ -215,7 +222,7 @@ export default class LandingPage extends React.Component<ILandingPageProps> {
                   <div className={styles.blogCard}>
                     <div className={styles.blogImage}>
                       <img
-                        src={require('../assets/03.png')}
+                        src={BlogIcon2}
                         alt="Business team meeting"
                       />
                     </div>
@@ -227,12 +234,12 @@ export default class LandingPage extends React.Component<ILandingPageProps> {
 
                       <div className={styles.blogMeta}>
                         <span>
-                          <img src={require('../assets/People.png')} />
+                          <img src={PeopleIcon} />
                           By William
                         </span>
 
                         <span>
-                          <img src={require('../assets/Calendar.png')} />
+                          <img src={CalendarIcon} />
                           July 29, 2023
                         </span>
                       </div>
@@ -264,17 +271,17 @@ export default class LandingPage extends React.Component<ILandingPageProps> {
 
                   <div className={styles.aboutFeatures}>
                     <div className={styles.aboutfeatureItem}>
-                      <span className={styles.aboutcheckIcon}><img className={styles.aboutImage} src={require('../assets/Group16130.png')} alt="Check" /></span>
+                      <span className={styles.aboutcheckIcon}><img className={styles.aboutImage} src={CorrectIcon} alt="Check" /></span>
                       <span>Personalized Learning Paths</span>
                     </div>
 
                     <div className={styles.aboutfeatureItem}>
-                      <span className={styles.aboutcheckIcon}><img className={styles.aboutImage} src={require('../assets/Group16130.png')} alt="Check" /></span>
+                      <span className={styles.aboutcheckIcon}><img className={styles.aboutImage} src={CorrectIcon} alt="Check" /></span>
                       <span>Interactive Course Materials</span>
                     </div>
 
                     <div className={styles.aboutfeatureItem}>
-                      <span className={styles.aboutcheckIcon}><img className={styles.aboutImage} src={require('../assets/Group16130.png')} alt="Check" /></span>
+                      <span className={styles.aboutcheckIcon}><img className={styles.aboutImage} src={CorrectIcon} alt="Check" /></span>
                       <span>Expert Instructor Support</span>
                     </div>
                   </div>
@@ -288,7 +295,7 @@ export default class LandingPage extends React.Component<ILandingPageProps> {
 
                   <div>
                     <img
-                      src={require('../assets/Group16129.png')} alt="Smiling woman" />
+                      src={DiscoverIcon} alt="Smiling woman" />
                   </div>
                 </div>
 

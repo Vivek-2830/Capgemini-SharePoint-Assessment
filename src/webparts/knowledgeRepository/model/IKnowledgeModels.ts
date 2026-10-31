@@ -6,4 +6,5 @@ export interface IKnowledgeInfo {
   Image: string;
   PublishDate: string;
   ArticleContent: string;
+  ViewCount: number;
 }
