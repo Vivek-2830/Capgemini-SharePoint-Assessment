@@ -8,15 +8,13 @@ import { IKnowledgeInfo } from '../model/IKnowledgeModels';
 import { KnowledgeArticleServices } from '../services/KnowledgeArticleService';
 
 interface IKnowledgeRepositoryState {
-  info?: IKnowledgeInfo;
   Articles: IKnowledgeInfo[];
+  ArticleTypes: string[];
   loading: boolean;
   error: string;
-  // controls
   searchText: string;
   typeValue: string;
   sortValue: string;
-  // applied when "Filter" is clicked
   filter: { search: string; type: string; sort: string };
 }
 
@@ -43,10 +41,11 @@ export default class KnowledgeRepository extends React.Component<IKnowledgeRepos
   constructor(props: IKnowledgeRepositoryProps, state: IKnowledgeRepositoryState) {
     super(props);
 
-    this.article = new KnowledgeArticleServices();
+    this.article = new KnowledgeArticleServices(props.context);
 
     this.state = {
       Articles: [],
+      ArticleTypes: [],
       loading: true,
       error: '',
       searchText: '',
@@ -56,33 +55,56 @@ export default class KnowledgeRepository extends React.Component<IKnowledgeRepos
     };
   }
 
-  public componentDidMount(): Promise<void> {
-    this.loadAll();
+  public componentDidMount(): void {
+    void this.loadAll();
   }
 
   private async loadAll(): Promise<void> {
-    const info = await this.article.getArticleInfo();
+    try {
+      const [articles, articleTypes] = await Promise.all([
+        this.article.getArticleInfo(),
+        this.article.getArticleTypes()
+      ]);
 
-    await new Promise<void>((resolve) => {
-      this.setState({ info }, resolve);
-    });
+      console.log('Articles:', articles);
+      console.log('Dynamic Article Types:', articleTypes);
+
+      this.setState({
+        Articles: articles,
+        ArticleTypes: articleTypes,
+        loading: false,
+        error: ''
+      });
+
+    } catch (error) {
+      console.error('Error loading repository:', error);
+
+      this.setState({
+        Articles: [],
+        ArticleTypes: [],
+        loading: false,
+        error: 'Unable to load repository data.'
+      });
+    }
   }
 
   private getVisibleArticles(): IKnowledgeInfo[] {
     const { search, type, sort } = this.state.filter;
-    const q = search.trim().toLowerCase();
+    const query = search.trim().toLowerCase();
 
-    const list = this.state.Articles.filter((a) =>
-      (!type || a.ArticleType === type) &&
-      (!q || `${a.ArticleName} ${a.ArticleDescription}`.toLowerCase().indexOf(q) !== -1)
+    const list: IKnowledgeInfo[] = this.state.Articles.filter((article: IKnowledgeInfo) =>
+      (!type || article.ArticleType === type) &&
+      (!query || `${article.ArticleName} ${article.ArticleDescription}`.toLowerCase().indexOf(query) !== -1)
     );
 
-    list.sort((a, b) => {
+    list.sort((a: IKnowledgeInfo, b: IKnowledgeInfo) => {
       if (sort === 'az') return a.ArticleName.localeCompare(b.ArticleName);
       if (sort === 'za') return b.ArticleName.localeCompare(a.ArticleName);
-      const diff = new Date(a.PublishDate).getTime() - new Date(b.PublishDate).getTime();
-      return sort === 'oldest' ? diff : -diff;
+      const dateA = new Date(a.PublishDate).getTime() || 0;
+      const dateB = new Date(b.PublishDate).getTime() || 0;
+      return sort === 'oldest' ? dateA - dateB : dateB - dateA;
     });
+
     return list;
   }
 
@@ -93,18 +115,16 @@ export default class KnowledgeRepository extends React.Component<IKnowledgeRepos
 
   private onReset = (): void => {
     this.setState({
-      searchText: '', typeValue: '', sortValue: 'newest',
+      searchText: '',
+      typeValue: '',
+      sortValue: 'newest',
       filter: { search: '', type: '', sort: 'newest' }
     });
   };
 
   public render(): React.ReactElement<IKnowledgeRepositoryProps> {
-    const {
-      description,
-      isDarkTheme,
-      environmentMessage,
-      userDisplayName
-    } = this.props;
+    const { searchText, typeValue, sortValue, loading, error } = this.state;
+    const visible: IKnowledgeInfo[] = this.getVisibleArticles();
 
     return (
       <section className={`${styles.knowledgeRepository}`}>
@@ -144,15 +164,31 @@ export default class KnowledgeRepository extends React.Component<IKnowledgeRepos
 
           <div className={styles.field}>
             <label htmlFor="kh-type">Article Type</label>
-            <select id="kh-type" value={typeValue} onChange={(e) => this.setState({ typeValue: e.target.value })}>
-              <option value="">Select Article Type</option>
-              {types.map((t) => <option key={t} value={t}>{t}</option>)}
+
+            <select
+              id="kh-type"
+              value={typeValue}
+              onChange={(e) =>
+                this.setState({ typeValue: e.target.value })
+              }
+            >
+              <option value="">All article types</option>
+
+              {this.state.ArticleTypes.map((type: string) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
             </select>
           </div>
 
           <div className={styles.field}>
             <label htmlFor="kh-sort">Sorting</label>
-            <select id="kh-sort" value={sortValue} onChange={(e) => this.setState({ sortValue: e.target.value })}>
+            <select
+              id="kh-sort"
+              value={sortValue}
+              onChange={(e) => this.setState({ sortValue: e.target.value })}
+            >
               <option value="newest">Newest first</option>
               <option value="oldest">Oldest first</option>
               <option value="az">Title A–Z</option>
@@ -167,10 +203,12 @@ export default class KnowledgeRepository extends React.Component<IKnowledgeRepos
         </div>
 
         <div className={styles.cardGrid}>
-          {visible.map((a) => (
+          {visible.map((a: IKnowledgeInfo) => (
             <article key={a.ID} className={styles.card}>
               <div className={styles.cardImage}>
-                {a.Image ? <img src={a.Image} alt="" /> : <span>{a.Title.charAt(0)}</span>}
+                {a.Image
+                  ? <img src={a.Image} alt={a.ArticleName} />
+                  : <span>{a.ArticleName ? a.ArticleName.charAt(0) : 'A'}</span>}
               </div>
               <div className={styles.cardBody}>
                 {a.ArticleType && <span className={styles.typeTag}>{a.ArticleType}</span>}

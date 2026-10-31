@@ -108,6 +108,319 @@
   }
 }
 
+
+
+/* ==============================
+   FILTER BAR
+================================ */
+
+.filterBar {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr 1.2fr auto;
+  align-items: end;
+  gap: 18px;
+  width: 100%;
+  padding: 20px;
+  margin-bottom: 25px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #e5eaf0;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+
+  label {
+    color: #344054;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  input,
+  select {
+    width: 100%;
+    height: 42px;
+    padding: 0 13px;
+    box-sizing: border-box;
+    color: #344054;
+    background: #ffffff;
+    border: 1px solid #d0d5dd;
+    border-radius: 7px;
+    outline: none;
+    font-family: "Segoe UI", sans-serif;
+    font-size: 13px;
+    transition: all 0.2s ease;
+
+    &:focus {
+      border-color: #0078d4;
+      box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.12);
+    }
+
+    &::placeholder {
+      color: #98a2b3;
+    }
+  }
+
+  select {
+    cursor: pointer;
+  }
+}
+
+/* ==============================
+   FILTER BUTTONS
+================================ */
+
+.buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 42px;
+}
+
+.primaryButton,
+.secondaryButton {
+  height: 42px;
+  padding: 0 20px;
+  border-radius: 7px;
+  font-family: "Segoe UI", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.primaryButton {
+  color: #ffffff;
+  background: #0078d4;
+  border: 1px solid #0078d4;
+
+  &:hover {
+    background: #005a9e;
+    border-color: #005a9e;
+  }
+}
+
+.secondaryButton {
+  color: #344054;
+  background: #ffffff;
+  border: 1px solid #d0d5dd;
+
+  &:hover {
+    color: #0078d4;
+    background: #f0f7ff;
+    border-color: #0078d4;
+  }
+}
+
+/* ==============================
+   ARTICLE CARD GRID
+================================ */
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* ==============================
+   ARTICLE CARD
+================================ */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e5eaf0;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(16, 24, 40, 0.05);
+  transition: all 0.25s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    border-color: #c7dcf5;
+    box-shadow: 0 8px 22px rgba(16, 24, 40, 0.11);
+
+    .cardImage img {
+      transform: scale(1.05);
+    }
+  }
+}
+
+/* ==============================
+   CARD IMAGE
+================================ */
+
+.cardImage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 175px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #eaf3ff, #dceafe);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 65px;
+    height: 65px;
+    color: #0078d4;
+    background: #ffffff;
+    border-radius: 50%;
+    font-size: 30px;
+    font-weight: 700;
+    text-transform: uppercase;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* ==============================
+   CARD BODY
+================================ */
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 17px;
+}
+
+.typeTag {
+  display: inline-flex;
+  align-self: flex-start;
+  max-width: 100%;
+  padding: 5px 11px;
+  margin-bottom: 12px;
+  color: #005a9e;
+  background: #e5f1ff;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.cardTitle {
+  margin: 0 0 10px;
+  color: #172b4d;
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.bannerDescription {
+  display: -webkit-box;
+  margin: 0 0 15px;
+  overflow: hidden;
+  color: #667085;
+  font-size: 13px;
+  line-height: 1.7;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* ==============================
+   CARD META
+================================ */
+
+.cardMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid #eef0f3;
+
+  span {
+    color: #98a2b3;
+    font-size: 12px;
+    font-weight: 500;
+  }
+}
+
+/* ==============================
+   RESPONSIVE DESIGN
+================================ */
+
+/* Laptop */
+@media screen and (max-width: 1200px) {
+  .filterBar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .buttons {
+    grid-column: span 2;
+    justify-content: flex-end;
+  }
+
+  .cardGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Tablet */
+@media screen and (max-width: 768px) {
+  .filterBar {
+    grid-template-columns: 1fr 1fr;
+    padding: 15px;
+    gap: 14px;
+  }
+
+  .cardGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+  }
+
+  .cardImage {
+    height: 150px;
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 520px) {
+  .filterBar {
+    grid-template-columns: 1fr;
+  }
+
+  .buttons {
+    grid-column: auto;
+    width: 100%;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    flex: 1;
+    padding: 0 12px;
+  }
+
+  .cardGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .cardImage {
+    height: 190px;
+  }
+}
+
 /* -------------------------------------------------------------------------------------- */
 
 #CommentsWrapper {
