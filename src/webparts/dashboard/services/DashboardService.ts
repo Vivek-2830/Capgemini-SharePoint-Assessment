@@ -50,10 +50,6 @@ export default class DashboardService {
     return result.value || [];
   }
 
-  /**
-   * Call this from the Knowledge Repository when a user opens an article.
-   * ViewedBy must be a SharePoint Person column; ViewedById is the user ID.
-   */
   public async logArticleAccess(article: {
     Id: number;
     Title: string;

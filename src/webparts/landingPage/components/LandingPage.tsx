@@ -13,6 +13,7 @@ import BlogIcon from '../assets/01.png';
 import BlogIcon1 from '../assets/02.png';
 import BlogIcon2 from '../assets/03.png';
 import DiscoverIcon from '../assets/Group16129.png';
+import CompanyIcon from '../assets/LOGO.png';
  
 export default class LandingPage extends React.Component<ILandingPageProps> {
   public render(): React.ReactElement<ILandingPageProps> {
@@ -28,6 +29,13 @@ export default class LandingPage extends React.Component<ILandingPageProps> {
           <div className={styles.headerContainer}>
 
             <div className={styles.headerTop}>
+
+            <div className={styles.headerLogo}>
+              <img
+                src={CompanyIcon}
+                alt="Capgemini"
+              />
+            </div>
 
               <div className={styles.headerRight}>
 

@@ -6,6 +6,11 @@ import welcomeDark from '../assets/welcome-dark.png';
 import welcomeLight from '../assets/welcome-light.png';
 import { IKnowledgeInfo } from '../model/IKnowledgeModels';
 import { KnowledgeArticleServices } from '../services/KnowledgeArticleService';
+import SearchIcon from '../assets/Search.png';
+import CartIcon from '../assets/cart_normal.png';
+import Notification from '../assets/Noti_Normal.png';
+import ProfileIcon from '../assets/Profile.png';
+import CompanyIcon from '../assets/LOGO.png';
 
 interface IKnowledgeRepositoryState {
   Articles: IKnowledgeInfo[];
@@ -214,6 +219,59 @@ export default class KnowledgeRepository extends React.Component<IKnowledgeRepos
     const visible: IKnowledgeInfo[] = this.getVisibleArticles();
 
     return (
+      <>
+        <div className={styles.headerContainer}>
+
+          <div className={styles.headerTop}>
+
+            <div className={styles.headerLogo}>
+              <img
+                src={CompanyIcon}
+                alt="Capgemini"
+              />
+            </div>
+
+            <div className={styles.headerRight}>
+
+              <div className={styles.headerActions}>
+
+                <div className={styles.searchBox}>
+                  <input type="text" className={styles.searchInput} />
+
+                  <button className={styles.searchButton} aria-label="Search">
+                    <img src={SearchIcon} alt="" />
+                  </button>
+                </div>
+
+                <button className={styles.ticketButton}> Raise a Ticket <span>→</span> </button>
+
+                <button className={styles.iconButton} aria-label="Shopping cart">
+                  <img src={CartIcon} alt="" />
+                </button>
+
+                <button className={styles.iconButton} aria-label="Notifications">
+                  <img src={Notification} alt="" />
+                </button>
+
+                <div className={styles.profile}>
+                  <img src={ProfileIcon} alt="User Profile" />
+                </div>
+
+              </div>
+
+              <nav className={styles.headerNavigation}>
+                <a href="https://87twts.sharepoint.com/sites/Assessment">Home</a>
+                <span>|</span>
+                <a href="https://87twts.sharepoint.com/sites/Assessment/SitePages/KnowledgeRepository.aspx">Knowledge Repository</a>
+                <span>|</span>
+                <a href="https://87twts.sharepoint.com/sites/Assessment/SitePages/Dashboard.aspx">Dashboard</a>
+              </nav>
+
+            </div>
+
+          </div>
+        </div>
+
       <section className={`${styles.knowledgeRepository}`}>
 
         <section className={styles.knowledgeHubBanner}>
@@ -458,6 +516,8 @@ export default class KnowledgeRepository extends React.Component<IKnowledgeRepos
         )}
 
       </section>
+      </>
+      
     );
   }
 }

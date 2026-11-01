@@ -3,6 +3,32 @@ import styles from './Dashboard.module.scss';
 import type { IDashboardProps } from './IDashboardProps';
 import DashboardService from '../services/DashboardService';
 import { IKnowledgeArticle, IArticleAccessLog } from '../model/IDashboard';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+} from 'chart.js';
+
+import { Bar } from 'react-chartjs-2';
+
+import SearchIcon from '../assets/Search.png';
+import CartIcon from '../assets/cart_normal.png';
+import Notification from '../assets/Noti_Normal.png';
+import ProfileIcon from '../assets/Profile.png';
+import CompanyIcon from '../assets/LOGO.png';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 interface IDashboardState {
   articles: IKnowledgeArticle[];
@@ -46,7 +72,6 @@ export default class Dashboard extends React.Component<IDashboardProps, IDashboa
 
   public componentDidMount(): void {
     void this.loadDashboard();
-    // Near-real-time refresh. This is polling, not push notification.
     this.refreshTimer = window.setInterval(() => {
       void this.loadDashboard(true);
     }, 30000);
@@ -107,7 +132,6 @@ export default class Dashboard extends React.Component<IDashboardProps, IDashboa
       )
     );
 
-    // Include categories found in access logs as well.
     logs.forEach(log => {
       if (log.Category && categories.indexOf(log.Category) === -1) {
         categories.push(log.Category);
@@ -169,92 +193,89 @@ export default class Dashboard extends React.Component<IDashboardProps, IDashboa
     categoryCounts: ICategoryCount[]
   ): React.ReactElement => {
 
-    const maxValue = Math.max(
-      1,
-      ...categoryCounts.map(item => item.count)
-    );
+    const chartData = {
+      labels: categoryCounts.map(item => item.name),
 
-    const maxScale = Math.max(
-      5,
-      Math.ceil(maxValue / 5) * 5
-    );
+      datasets: [
+        {
+          label: 'Article Views',
+          data: categoryCounts.map(item => item.count),
 
-    const ticks = [
-      maxScale,
-      Math.round(maxScale * 0.75),
-      Math.round(maxScale * 0.5),
-      Math.round(maxScale * 0.25),
-      0
-    ];
+          backgroundColor: [
+            '#00D4CF',
+            '#0070AD'
+          ],
+
+          borderColor: [
+            '#00D4CF',
+            '#0070AD'
+          ],
+
+          borderWidth: 1,
+          borderRadius: 5,
+          barThickness: 45
+        }
+      ]
+    };
+
+    const chartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+
+      plugins: {
+        legend: {
+          display: false
+        },
+
+        title: {
+          display: false
+        },
+
+        tooltip: {
+          enabled: true,
+          callbacks: {
+            label: (context: any) =>
+              `${context.parsed.y} views`
+          }
+        }
+      },
+
+      scales: {
+        y: {
+          beginAtZero: true,
+
+          ticks: {
+            precision: 0
+          },
+
+          grid: {
+            color: '#eeeeee'
+          },
+
+          title: {
+            display: true,
+          }
+        },
+
+        x: {
+          grid: {
+            display: false
+          },
+
+          title: {
+            display: true,
+            text: 'Article Categories'
+          }
+        }
+      }
+    };
 
     return (
-      <div className={styles.barChartContainer}>
-
-        {/* Y Axis */}
-        <div className={styles.yAxis}>
-          {ticks.map((tick, index) => (
-            <span key={index}>{tick}</span>
-          ))}
-        </div>
-
-        {/* Vertical Chart */}
-        <div className={styles.barChart}>
-
-          <div className={styles.chartGrid}>
-            {ticks.map((tick, index) => (
-              <div
-                key={index}
-                className={styles.gridLine}
-                style={{
-                  bottom: `${(tick / maxScale) * 100}%`
-                }}
-              />
-            ))}
-          </div>
-
-          <div className={styles.barsWrapper}>
-
-            {categoryCounts.map((item, index) => {
-
-              const barHeight =
-                (item.count / maxScale) * 100;
-
-              const color = this.chartColor;
-
-              return (
-                <div
-                  className={styles.barColumn}
-                  key={item.name}
-                >
-
-                  <span className={styles.barValue}>
-                    {item.count}
-                  </span>
-
-                  <div className={styles.barArea}>
-                    <div
-                      className={styles.bar}
-                      style={{
-                        height: `${barHeight}%`,
-                        backgroundColor: color
-                      }}
-                      title={`${item.name}: ${item.count} views`}
-                    />
-                  </div>
-
-                  <span
-                    className={styles.barLabel}
-                    title={item.name}
-                  >
-                    {item.name}
-                  </span>
-
-                </div>
-              );
-            })}
-
-          </div>
-        </div>
+      <div className={styles.chartJsContainer}>
+        <Bar
+          data={chartData}
+          options={chartOptions}
+        />
       </div>
     );
   };
@@ -284,164 +305,216 @@ export default class Dashboard extends React.Component<IDashboardProps, IDashboa
     })).sort((a, b) => b.count - a.count).slice(0, 5);
 
     return (
-      <section className={styles.dashboard}>
-        <div className={styles.header}>
-          <div>
-            <h2>Knowledge Dashboard</h2>
-            <p>Knowledge repository usage and article engagement</p>
-          </div>
-          <div className={styles.headerRight}>
-            <span className={styles.live}><span className={styles.liveDot}></span> Live activity</span>
-            <button className={styles.refreshButton} onClick={() => void this.loadDashboard(true)}>
-              {refreshing ? 'Refreshing...' : 'Refresh'}
-            </button>
+      <>
+        <div className={styles.headerContainer}>
+
+          <div className={styles.header}>
+
+            <div className={styles.headerLogo}>
+              <img
+                src={CompanyIcon}
+                alt="Capgemini"
+              />
+            </div>
+
+            <div className={styles.headerRight}>
+
+              <div className={styles.headerActions}>
+
+                <div className={styles.searchBox}>
+                  <input type="text" className={styles.searchInput} />
+
+                  <button className={styles.searchButton} aria-label="Search">
+                    <img src={SearchIcon} alt="" />
+                  </button>
+                </div>
+
+                <button className={styles.ticketButton}> Raise a Ticket <span>→</span> </button>
+
+                <button className={styles.iconButton} aria-label="Shopping cart">
+                  <img src={CartIcon} alt="" />
+                </button>
+
+                <button className={styles.iconButton} aria-label="Notifications">
+                  <img src={Notification} alt="" />
+                </button>
+
+                <div className={styles.profile}>
+                  <img src={ProfileIcon} alt="User Profile" />
+                </div>
+
+              </div>
+
+              <nav className={styles.headerNavigation}>
+                <a href="https://87twts.sharepoint.com/sites/Assessment">Home</a>
+                <span>|</span>
+                <a href="https://87twts.sharepoint.com/sites/Assessment/SitePages/KnowledgeRepository.aspx">Knowledge Repository</a>
+                <span>|</span>
+                <a href="https://87twts.sharepoint.com/sites/Assessment/SitePages/Dashboard.aspx">Dashboard</a>
+              </nav>
+
+            </div>
+
           </div>
         </div>
 
-        {error && <div className={styles.error}>{error}<br />Check list names, column internal names, and current user's list permissions.</div>}
+        <section className={styles.dashboard}>
 
-        {loading ? (
-          <div className={styles.loading}>Loading dashboard data...</div>
-        ) : (
-          <>
-            <div className={styles.kpiGrid}>
-              <div className={styles.kpiCard}>
-                <span className={styles.kpiLabel}>Total Articles</span>
-                <strong>{totalArticles}</strong>
-                <small>Articles in Knowledge list</small>
-              </div>
-              <div className={styles.kpiCard}>
-                <span className={styles.kpiLabel}>Total Views</span>
-                <strong>{totalViews}</strong>
-                <small>Recorded access events</small>
-              </div>
-              <div className={styles.kpiCard}>
-                <span className={styles.kpiLabel}>Active Users</span>
-                <strong>{activeUsers}</strong>
-                <small>Unique users in last 24 hours</small>
-              </div>
-              <div className={styles.kpiCard}>
-                <span className={styles.kpiLabel}>Article Categories</span>
-                <strong>{categories.length}</strong>
-                <small>Categories in Knowledge list</small>
-              </div>
+          <div className={styles.header}>
+            <div>
+              <h2>Knowledge Dashboard</h2>
+              <p>Knowledge repository usage and article engagement</p>
             </div>
-
-            {/* Article Views by Category */}
-            <div className={styles.chartpanel}>
-              <h3>Article Views by Category</h3>
-
-              {categoryCounts.length === 0 ? (
-                <p className={styles.empty}>
-                  No categories found.
-                </p>
-              ) : (
-                this.renderCategoryChart(categoryCounts)
-              )}
-
-              {/* <p className={styles.note}>
-                Counts are calculated from Article Access Logs.
-              </p> */}
+            <div className={styles.headerRight}>
+              <span className={styles.live}><span className={styles.liveDot}></span> Live activity</span>
+              <button className={styles.refreshButton} onClick={() => void this.loadDashboard(true)}>
+                {refreshing ? 'Refreshing...' : 'Refresh'}
+              </button>
             </div>
+          </div>
 
+          {error && <div className={styles.error}>{error}<br />Check list names, column internal names, and current user's list permissions.</div>}
 
-            {/* Most Viewed Articles + Recent Activity */}
-            <div className={styles.activityGrid}>
+          {loading ? (
+            <div className={styles.loading}>Loading dashboard data...</div>
+          ) : (
+            <>
+              <div className={styles.kpiGrid}>
+                <div className={styles.kpiCard}>
+                  <span className={styles.kpiLabel}>Total Articles</span>
+                  <strong>{totalArticles}</strong>
+                  <small>Articles in Knowledge list</small>
+                </div>
+                <div className={styles.kpiCard}>
+                  <span className={styles.kpiLabel}>Total Views</span>
+                  <strong>{totalViews}</strong>
+                  <small>Recorded access events</small>
+                </div>
+                <div className={styles.kpiCard}>
+                  <span className={styles.kpiLabel}>Active Users</span>
+                  <strong>{activeUsers}</strong>
+                  <small>Unique users in last 24 hours</small>
+                </div>
+                <div className={styles.kpiCard}>
+                  <span className={styles.kpiLabel}>Article Categories</span>
+                  <strong>{categories.length}</strong>
+                  <small>Categories in Knowledge list</small>
+                </div>
+              </div>
 
-              {/* LEFT SIDE - Most Viewed Articles */}
-              <div className={styles.activepanel}>
-                <h3>Most Viewed Articles</h3>
+              {/* Article Views by Category */}
+              <div className={styles.chartpanel}>
+                <h3>Article Views by Category</h3>
 
-                {articleCounts.length === 0 || totalViews === 0 ? (
+                {categoryCounts.length === 0 ? (
                   <p className={styles.empty}>
-                    No article views recorded yet.
+                    No categories found.
                   </p>
                 ) : (
-                  articleCounts.map(item => (
-                    <div
-                      className={styles.topArticle}
-                      key={item.name}
-                    >
-                      <span title={item.name}>
-                        {item.name}
-                      </span>
-
-                      <b>{item.count} views</b>
-                    </div>
-                  ))
+                  this.renderCategoryChart(categoryCounts)
                 )}
               </div>
 
-              {/* RIGHT SIDE - Recent Article Access Activity */}
-              <div className={styles.panel}>
+              {/* Most Viewed Articles + Recent Activity */}
+              <div className={styles.activityGrid}>
 
-                <div className={styles.activityHeader}>
-                  <div>
-                    <h3>Recent Article Access Activity</h3>
-                    <p>Latest users accessing knowledge articles</p>
-                  </div>
+                {/* Most Viewed Articles */}
+                <div className={styles.activepanel}>
+                  <h3>Most Viewed Articles</h3>
 
-                  <span className={styles.updated}>
-                    Updated: {
-                      lastUpdated
-                        ? lastUpdated.toLocaleTimeString()
-                        : '-'
-                    }
-                  </span>
+                  {articleCounts.length === 0 || totalViews === 0 ? (
+                    <p className={styles.empty}>
+                      No article views recorded yet.
+                    </p>
+                  ) : (
+                    articleCounts.map(item => (
+                      <div
+                        className={styles.topArticle}
+                        key={item.name}
+                      >
+                        <span title={item.name}>
+                          {item.name}
+                        </span>
+
+                        <b>{item.count} views</b>
+                      </div>
+                    ))
+                  )}
                 </div>
 
-                {logs.length === 0 ? (
-                  <p className={styles.empty}>
-                    No access records found. Open an article from
-                    the Knowledge Repository to create the first record.
-                  </p>
-                ) : (
-                  <div className={styles.activityList}>
-                    {logs.slice(0, 10).map(log => {
-                      const person =
-                        log.ViewedBy?.Title || 'Unknown user';
+                {/* Recent Article Access Activity */}
+                <div className={styles.panel}>
 
-                      return (
-                        <div
-                          className={styles.activityItem}
-                          key={log.Id}
-                        >
-                          <div className={styles.avatar}>
-                            {this.getInitials(person)}
-                          </div>
+                  <div className={styles.activityHeader}>
+                    <div>
+                      <h3>Recent Article Access Activity</h3>
+                      <p>Latest users accessing knowledge articles</p>
+                    </div>
 
-                          <div className={styles.activityDetails}>
-                            <strong>{person}</strong>
-
-                            <span>
-                              Accessed <b>
-                                {log.ArticleTitle ||
-                                  log.Title ||
-                                  `Article #${log.ArticleID || ''}`}
-                              </b>
-                            </span>
-
-                            <small>
-                              {log.Category || 'Uncategorized'}
-                            </small>
-                          </div>
-
-                          <time>
-                            {this.formatDateTime(log.ViewedAt)}
-                          </time>
-                        </div>
-                      );
-                    })}
+                    <span className={styles.updated}>
+                      Updated: {
+                        lastUpdated
+                          ? lastUpdated.toLocaleTimeString()
+                          : '-'
+                      }
+                    </span>
                   </div>
-                )}
+
+                  {logs.length === 0 ? (
+                    <p className={styles.empty}>
+                      No access records found. Open an article from
+                      the Knowledge Repository to create the first record.
+                    </p>
+                  ) : (
+                    <div className={styles.activityList}>
+                      {logs.slice(0, 5).map(log => {
+                        const person =
+                          log.ViewedBy?.Title || 'Unknown user';
+
+                        return (
+                          <div
+                            className={styles.activityItem}
+                            key={log.Id}
+                          >
+                            <div className={styles.avatar}>
+                              {this.getInitials(person)}
+                            </div>
+
+                            <div className={styles.activityDetails}>
+                              <strong>{person}</strong>
+
+                              <span>
+                                Accessed <b>
+                                  {log.ArticleTitle ||
+                                    log.Title ||
+                                    `Article #${log.ArticleID || ''}`}
+                                </b>
+                              </span>
+
+                              <small>
+                                {log.Category || 'Uncategorized'}
+                              </small>
+                            </div>
+
+                            <time>
+                              {this.formatDateTime(log.ViewedAt)}
+                            </time>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                </div>
 
               </div>
+            </>
+          )}
 
-            </div>
-          </>
-        )}
-        {/* <div className={styles.footer}>Dashboard refreshes automatically every 30 seconds.</div> */}
-      </section>
+        </section>
+      </>
+
+
     );
   }
 }

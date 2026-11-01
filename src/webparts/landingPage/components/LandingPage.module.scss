@@ -25,6 +25,7 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  margin-left: 10px;
 
   img {
     width: 140px;
@@ -948,15 +949,36 @@
   display: none !important;
 }
 
-#sp-appBar {
+#spCommandBar {
+  display: none !important;
+  
+}
+
+.commandBarWrapper {
+    display: none !important;
+}
+
+[data-focuszone-id="FocusZone6"] {
   display: none !important;
 }
 
-.isFluent .SPPageChrome-app .commandBarWrapper {
-  height: 0px;
+#spTopContentPlaceholder {
+  display: none !important;
 }
 
-#spCommandBar {
+.commandBarButtonHeightAndColor {
+  display: none !important;
+}
+
+[data-automationid="SiteHeader"] {
+  display: none !important;
+}
+
+[data-automationid="ShyHeader"] {
+  display: none !important
+}
+
+[data-automation-id="SiteHeaderOverlay"] {
   display: none !important;
 }
 
@@ -1005,5 +1027,9 @@
 }
 
 [data-automationid="HorizontalNav-edit"] {
+  display: none;
+}
+
+#spSiteHeader {
   display: none;
 }
