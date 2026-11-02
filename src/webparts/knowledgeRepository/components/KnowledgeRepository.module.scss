@@ -830,7 +830,7 @@
 
 
 #CommentsWrapper {
-  display: none !important;
+  display: none;
 }
 
 #spCommandBar {
@@ -843,6 +843,10 @@
 }
 
 [data-focuszone-id="FocusZone6"] {
+  display: none !important;
+}
+
+[data-automationid="HorizontalNav-edit"] {
   display: none !important;
 }
 
@@ -871,10 +875,6 @@
 }
 
 [data-automation-id="pageCommandBarEditButton"] {
-  display: none;
-}
-
-[data-automation-id="HorizontalNav-edit"] {
   display: none;
 }
 
@@ -911,10 +911,6 @@
 }
 
 [data-automation-id="shareButton"] {
-  display: none;
-}
-
-[data-automationid="HorizontalNav-edit"] {
   display: none;
 }
 

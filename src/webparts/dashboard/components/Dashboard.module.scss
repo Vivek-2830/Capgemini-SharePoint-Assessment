@@ -1,9 +1,9 @@
 .dashboard {
   overflow: hidden;
   // padding: 1em;
-  color: "[theme:bodyText, default: #323130]";
   color: var(--bodyText);
   background-color: rgb(250, 249, 248);
+  margin-top: 21px;
 }
 
 .header {
@@ -664,8 +664,10 @@
   }
 }
 
-.headerTop {
-  padding: 8px 9px 14px;
+.dashheaderTop {
+  padding: 9px 0px 20px;
+  margin-left: -20px;
+  margin-top: -32px;
 }
 
 .headerLogo {

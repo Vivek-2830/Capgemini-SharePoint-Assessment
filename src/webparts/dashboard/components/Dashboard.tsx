@@ -306,9 +306,9 @@ export default class Dashboard extends React.Component<IDashboardProps, IDashboa
 
     return (
       <>
-        <div className={styles.headerContainer}>
+         <div className={styles.headerContainer}>
 
-          <div className={styles.header}>
+          <div className={styles.dashheaderTop}>
 
             <div className={styles.headerLogo}>
               <img
